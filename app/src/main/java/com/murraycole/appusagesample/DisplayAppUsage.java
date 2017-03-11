@@ -18,6 +18,9 @@ import android.app.usage.UsageStatsManager;
 import android.app.usage.UsageStats;
 import java.util.Calendar;
 import java.util.List;
+import android.graphics.Color;
+import android.widget.TextView;
+
 
 
 
@@ -25,6 +28,9 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
+import com.jjoe64.graphview.ValueDependentColor;
+
 
 import java.util.Map;
 
@@ -34,11 +40,11 @@ public class DisplayAppUsage extends Activity{
     List<UsageStats> prayerList;
     Button backToCat;
     GraphView barGraph;
-    UsageStats data;
-    long time0,time1,time2,time3;
+    long time0,time1,time2,time3,maxValue=0;
     int i;
     String catName;
     UStats prayer;
+    TextView instagram, facebook, twitter, snapchat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,15 @@ public class DisplayAppUsage extends Activity{
 
         Bundle extras = getIntent().getExtras();
         catName = extras.getString("name");
+
+        instagram = (TextView) findViewById(R.id.legend_instagram);
+        facebook = (TextView) findViewById(R.id.legend_facebook);
+        twitter = (TextView) findViewById(R.id.legend_twitter);
+        snapchat = (TextView) findViewById(R.id.legend_snapchat);
+        instagram.setText("Bar 1 = Instagram");
+        facebook.setText("Bar 2 = Facebook");
+        twitter.setText("Bar 3 = Twitter");
+        snapchat.setText("Bar 4 = Snapchat");
 
         backToCat = (Button) findViewById(R.id.back_to_cat_btn);
         barGraph = (GraphView) findViewById(R.id.bar_graph);
@@ -58,51 +73,73 @@ public class DisplayAppUsage extends Activity{
         prayerList = prayer.getUsageStatsList(this);
         prayer.printUsageStats(prayerList);
 
-        for(i=0 ; i<prayerList.size() ; i++)
-        {
-            if(prayerList.get(i).getPackageName().equals("com.android.chrome"))
+        for(i=0 ; i<prayerList.size() ; i++) {
+            if (prayerList.get(i).getPackageName().equals("com.android.chrome")) {
                 time0 = prayerList.get(i).getTotalTimeInForeground();
-            if(prayerList.get(i).getPackageName().equals("com.android.settings"))
+                if (time0 > maxValue) maxValue = time0;
+            }
+            if (prayerList.get(i).getPackageName().equals("com.android.settings")) {
                 time1 = prayerList.get(i).getTotalTimeInForeground();
+                if (time1 > maxValue) maxValue = time1;
+            }
+//            if(prayerList.get(i).getPackageName().equals("com.instagram.android"))
+//            {
+//              time0 = prayerList.get(i).getTotalTimeInForeground();
+//              if (time0 > maxValue) maxValue = time0;
+//            }
+//            if(prayerList.get(i).getPackageName().equals("com.facebook.android"))
+//            {
+//              time1 = prayerList.get(i).getTotalTimeInForeground();
+//              if (time1 > maxValue) maxValue = time1;
+//            }
+            if(prayerList.get(i).getPackageName().equals("com.twitter.android"))
+            {
+                time2 = prayerList.get(i).getTotalTimeInForeground();
+                if(time2>maxValue) maxValue=time2;
+            }
+            if(prayerList.get(i).getPackageName().equals("com.snapchat.android"))
+            {
+                time3 = prayerList.get(i).getTotalTimeInForeground();
+                if(time3>maxValue) maxValue=time2;
+            }
 
 
 
         }
-        /*
-        for(i=0 ; i<prayerList.size() || prayerList.get(i).getPackageName() == "com.instagram.android" ; i++)
-        {}
-        time1 = prayerList.get(i).getTotalTimeInForeground();
-        for(i=0 ; i<prayerList.size() || prayerList.get(i).getPackageName() == "com.facebook.android" ; i++)
-        {}
-        time2 = prayerList.get(i).getTotalTimeInForeground();
-        for(i=0 ; i<prayerList.size() || prayerList.get(i).getPackageName() == "com.twitter.android" ; i++)
-        {}
-        time3 = prayerList.get(i).getTotalTimeInForeground();
-        */
+
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
-                new DataPoint(1, time0),
-                new DataPoint(2, 0),
-                new DataPoint(3, time1),
-                new DataPoint(4, 0),
-                new DataPoint(5, 3),
-                new DataPoint(6, 0),
-                new DataPoint(7, 4)
+                new DataPoint(1, time0/1000),
+                new DataPoint(2, time1/1000),
+                new DataPoint(3, time2/1000),
+                new DataPoint(4, time3/1000)
         });
+
+
         barGraph.addSeries(series);
         barGraph.getViewport().setYAxisBoundsManual(true);
         barGraph.getViewport().setMinY(0);
-        barGraph.getViewport().setMaxY(8000);
+        barGraph.getViewport().setMaxY((maxValue/1000)+5);
         barGraph.getViewport().setXAxisBoundsManual(true);
         barGraph.getViewport().setMinX(0);
-        barGraph.getViewport().setMaxX(8);
-//        backToCat.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), CatActivity.class);
-//                startActivity(intent);
-//            }
-//
-//        });
+        barGraph.getViewport().setMaxX(5);
+        barGraph.getViewport().setBackgroundColor(Color.BLACK);
+        barGraph.setTitle("Time Usage in Seconds");
+
+        // styling
+        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+            @Override
+            public int get(DataPoint data) {
+                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
+            }
+        });
+
+        series.setSpacing(50);
+
+// draw values on top
+        series.setDrawValuesOnTop(true);
+        series.setValuesOnTopColor(Color.RED);
+        series.setValuesOnTopSize(50);
+
     }
 
         public void exit_window(View view) {

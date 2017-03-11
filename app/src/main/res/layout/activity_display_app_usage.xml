@@ -14,11 +14,59 @@
         android:layout_height="wrap_content"
         android:id="@+id/back_to_cat_btn"
         android:onClick="exit_window"
+        android:layout_alignParentBottom="true"
+        android:text="Back"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
-        android:layout_height="200dip"
+        android:layout_height="400dip"
         android:id="@+id/bar_graph"
-        />
 
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="85dp"
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/legend_instagram"
+        android:textAlignment="center"
+        android:layout_marginLeft="12dp"
+        android:textSize="20dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/legend_facebook"
+        android:textAlignment="center"
+        android:layout_marginLeft="12dp"
+        android:textSize="20dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/legend_twitter"
+        android:textAlignment="center"
+        android:layout_marginLeft="12dp"
+        android:textSize="20dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/legend_snapchat"
+        android:textAlignment="center"
+        android:layout_marginLeft="12dp"
+        android:textSize="20dp"
+        />
+    </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

@@ -7,10 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 //import android.support.v7.app.ActionBarActivity;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +47,11 @@ public class CatActivity extends Activity {
 
 
 
+                        RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_cat);
+                        layout.setBackgroundResource(imageArray[asd]);
+
                         //imv.setImageDrawable(imageArray[asd]);
-                        imv.setImageResource(imageArray[asd]);
+                        //imv.setImageResource(imageArray[asd]);
                         Toast.makeText(CatActivity.this,
                                 string,
                         Toast.LENGTH_LONG).show();

@@ -19,10 +19,10 @@ public class UStats {
     @SuppressWarnings("ResourceType")
     public static void getStats(Context context){
         UsageStatsManager usm = (UsageStatsManager) context.getSystemService("usagestats");
-        int interval = UsageStatsManager.INTERVAL_YEARLY;
+        int interval = UsageStatsManager.INTERVAL_BEST;
         Calendar calendar = Calendar.getInstance();
         long endTime = calendar.getTimeInMillis();
-        calendar.add(Calendar.YEAR, -1);
+        calendar.add(Calendar.SECOND, -5);
         long startTime = calendar.getTimeInMillis();
 
         Log.d(TAG, "Range start:" + dateFormat.format(startTime) );
@@ -43,7 +43,7 @@ public class UStats {
         UsageStatsManager usm = getUsageStatsManager(context);
         Calendar calendar = Calendar.getInstance();
         long endTime = calendar.getTimeInMillis();
-        calendar.add(Calendar.YEAR, -1);
+        calendar.add(Calendar.SECOND, -5);
         long startTime = calendar.getTimeInMillis();
 
         Log.d(TAG, "Range start:" + dateFormat.format(startTime) );
