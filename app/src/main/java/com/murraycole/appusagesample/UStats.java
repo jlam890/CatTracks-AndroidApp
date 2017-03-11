@@ -65,7 +65,7 @@ public class UStats {
         printUsageStats(getUsageStatsList(context));
     }
     @SuppressWarnings("ResourceType")
-    public static UsageStatsManager getUsageStatsManager(Context context){
+    private static UsageStatsManager getUsageStatsManager(Context context){
         UsageStatsManager usm = (UsageStatsManager) context.getSystemService("usagestats");
         return usm;
     }
