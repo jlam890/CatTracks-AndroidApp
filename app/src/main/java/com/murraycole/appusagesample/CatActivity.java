@@ -22,10 +22,13 @@ public class CatActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cat);
 
-        Intent intent = getIntent();
-        catName = intent.getExtras().getParcelable("name");
-        catName="MEOW";
-        daysAlive = 1;
+//        Intent intent = getIntent();
+//        catName = intent.getExtras().getParcelable("name");
+//        catName = intent.getExtras("name");
+        Bundle extras = getIntent().getExtras();
+        catName = extras.getString("name");
+//        catName="MEOW";
+        daysAlive = 0;
 
         catNametv = (TextView)findViewById(R.id.cat_name);
         catNametv.setText(catName);

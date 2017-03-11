@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:inputType="textCapWords"
         android:ems="10"
-        android:text="Name"
+        android:hint="Name"
         android:windowSoftInputMode="stateHidden"
         android:id="@+id/name_text"
         android:layout_centerVertical="true"
