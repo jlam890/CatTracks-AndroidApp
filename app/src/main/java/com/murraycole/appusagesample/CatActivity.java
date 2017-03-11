@@ -22,6 +22,8 @@ public class CatActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cat);
 
+        Intent intent = getIntent();
+        catName = intent.getExtras().getParcelable("name");
         catName="MEOW";
         daysAlive = 1;
 
