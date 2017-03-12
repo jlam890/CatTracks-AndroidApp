@@ -16,7 +16,25 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:id="@+id/cat_name"
+        android:textSize="40dp"
         />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAlignment="center"
+        android:id="@+id/cat_lives"
+        android:gravity="right"
+        android:textSize="35dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="290dp"
+        android:gravity="end"
+        android:text="LIVES"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

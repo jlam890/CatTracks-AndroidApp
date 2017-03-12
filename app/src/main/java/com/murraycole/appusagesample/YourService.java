@@ -25,16 +25,35 @@ public class YourService extends IntentService {
     private int result = Activity.RESULT_CANCELED;
     public static final String URL = "urlpath";
     public static final String FILENAME = "somerhiht";
-    public static final String UPDATECAT = "updateCat";
+    public static final String TIME0 = "time0";
+    public static final String TIME1 = "time1";
+    public static final String TIME2 = "time2";
+    public static final String TIME3 = "time3";
     public static final String FILEPATH = "filepath";
     public static final String RESULT = "result";
     public static final String NOTIFICATION = "com.vogella.android.service.receiver";
+
+    List<UsageStats> prayerList;
+    UStats prayer;
+    long time0,time1,time2,time3,maxValue=0;
+    long timeArray[];
+
+    public int instUsage;
 
     public YourService() {
         super("YourService");
     }
     public void onCreate(){
         super.onCreate();
+
+        if (prayer.getUsageStatsList(this).isEmpty()) {
+            //Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            //startActivity(intent);
+        }
+
+        timeArray = new long[4];
+
+
         final Handler h = new Handler();
         h.postDelayed(new Runnable()
         {
@@ -43,17 +62,59 @@ public class YourService extends IntentService {
             @Override
             public void run()
             {
+
+                prayerList = prayer.getUsageStatsList(YourService.this);
+
+                for(int i=0 ; i<prayerList.size() ; i++) {
+                    if (prayerList.get(i).getPackageName().equals("com.android.chrome")) {
+                        time0 = prayerList.get(i).getTotalTimeInForeground();
+                        if (time0 > maxValue) maxValue = time0;
+                    }
+                    if (prayerList.get(i).getPackageName().equals("com.android.settings")) {
+                        time1 = prayerList.get(i).getTotalTimeInForeground();
+                        if (time1 > maxValue) maxValue = time1;
+                    }
+//            if(prayerList.get(i).getPackageName().equals("com.instagram.android"))
+//            {
+//              time0 = prayerList.get(i).getTotalTimeInForeground();
+//              if (time0 > maxValue) maxValue = time0;
+//            }
+//            if(prayerList.get(i).getPackageName().equals("com.facebook.android"))
+//            {
+//              time1 = prayerList.get(i).getTotalTimeInForeground();
+//              if (time1 > maxValue) maxValue = time1;
+//            }
+                    if(prayerList.get(i).getPackageName().equals("com.twitter.android"))
+                    {
+                        time2 = prayerList.get(i).getTotalTimeInForeground();
+                        if(time2>maxValue) maxValue=time2;
+                    }
+                    if(prayerList.get(i).getPackageName().equals("com.snapchat.android"))
+                    {
+                        time3 = prayerList.get(i).getTotalTimeInForeground();
+                        if(time3>maxValue) maxValue=time2;
+                    }
+
+
+
+                }
+                timeArray[0] = time0;
+                timeArray[1] = time1;
+                timeArray[2] = time2;
+                timeArray[3] = time3;
+
+
                 // do stuff then
                 // can call h again after work!
 
 
                 time += 1000;
                 System.out.println("sadf asdf adsf ");
-                Log.d("TimerExample", "Going for... " + time);
-                h.postDelayed(this, 1000);
-                publishResults(time + "", 1, (int) time);
+                //Log.d("TimerExample", "Going for... " + time);
+                h.postDelayed(this, 5000);
+                publishResults(time + "", 1, timeArray);
             }
-        }, 1000); // 1 second delay (takes millis)
+        }, 5000); // 1 second delay (takes millis)
 
     }
     // will be called asynchronously by Android
@@ -116,11 +177,14 @@ public class YourService extends IntentService {
 
     }
 
-    private void publishResults(String outputPath, int result, int updateCat) {
+    private void publishResults(String outputPath, int result, long[] times) {
         Intent intent = new Intent(NOTIFICATION);
         intent.putExtra(FILEPATH, outputPath);
         intent.putExtra(RESULT, result);
-        intent.putExtra(UPDATECAT, updateCat);
+        intent.putExtra(TIME0, times[0]);
+        intent.putExtra(TIME1, times[1]);
+        intent.putExtra(TIME2, times[2]);
+        intent.putExtra(TIME3, times[3]);
         sendBroadcast(intent);
     }
 }

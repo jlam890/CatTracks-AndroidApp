@@ -58,7 +58,7 @@ public class DisplayAppUsage extends Activity{
         facebook = (TextView) findViewById(R.id.legend_facebook);
         twitter = (TextView) findViewById(R.id.legend_twitter);
         snapchat = (TextView) findViewById(R.id.legend_snapchat);
-        instagram.setText("Bar 1 = Instagram");
+        instagram.setText("Bar 1 = Google Chrome");
         facebook.setText("Bar 2 = Facebook");
         twitter.setText("Bar 3 = Twitter");
         snapchat.setText("Bar 4 = Snapchat");
