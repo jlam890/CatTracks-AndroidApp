@@ -86,9 +86,9 @@ public class CatActivity extends Activity {
 
                         //imv.setImageDrawable(imageArray[asd]);
                         //imv.setImageResource(imageArray[asd]);
-                        Toast.makeText(CatActivity.this,
-                                string,
-                        Toast.LENGTH_LONG).show();
+                        //Toast.makeText(CatActivity.this,
+                        //        string,
+                        //Toast.LENGTH_LONG).show();
 
             }
         }
@@ -123,10 +123,10 @@ public class CatActivity extends Activity {
         imageArray = new int[6];
         imageArray[0] =R.drawable.happiercat_filled;
         imageArray[1] =R.drawable.happycat_filled;
-        imageArray[2] =R.drawable.damagedcat;
+        imageArray[2] =R.drawable.damagedcat_filled;
         imageArray[3] =R.drawable.abusedcat_filled;
-        imageArray[4] = R.drawable.deadcat;
-        imageArray[5] =R.drawable.ghostcat;
+        imageArray[4] = R.drawable.deadcat_filled;
+        imageArray[5] =R.drawable.ghostcat_filled;
 
         imv = (ImageView) findViewById(R.id.imageView);
 

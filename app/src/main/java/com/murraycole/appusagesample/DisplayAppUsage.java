@@ -58,7 +58,7 @@ public class DisplayAppUsage extends Activity{
         facebook = (TextView) findViewById(R.id.legend_facebook);
         twitter = (TextView) findViewById(R.id.legend_twitter);
         snapchat = (TextView) findViewById(R.id.legend_snapchat);
-        instagram.setText("Bar 1 = Google Chrome");
+        instagram.setText("Bar 1 = Instagram");
         facebook.setText("Bar 2 = Facebook");
         twitter.setText("Bar 3 = Twitter");
         snapchat.setText("Bar 4 = Snapchat");
@@ -74,24 +74,24 @@ public class DisplayAppUsage extends Activity{
         prayer.printUsageStats(prayerList);
 
         for(i=0 ; i<prayerList.size() ; i++) {
-            if (prayerList.get(i).getPackageName().equals("com.android.chrome")) {
-                time0 = prayerList.get(i).getTotalTimeInForeground();
-                if (time0 > maxValue) maxValue = time0;
-            }
-            if (prayerList.get(i).getPackageName().equals("com.android.settings")) {
-                time1 = prayerList.get(i).getTotalTimeInForeground();
-                if (time1 > maxValue) maxValue = time1;
-            }
-//            if(prayerList.get(i).getPackageName().equals("com.instagram.android"))
-//            {
-//              time0 = prayerList.get(i).getTotalTimeInForeground();
-//              if (time0 > maxValue) maxValue = time0;
+//            if (prayerList.get(i).getPackageName().equals("com.android.chrome")) {
+//                time0 = prayerList.get(i).getTotalTimeInForeground();
+//                if (time0 > maxValue) maxValue = time0;
 //            }
-//            if(prayerList.get(i).getPackageName().equals("com.facebook.android"))
-//            {
-//              time1 = prayerList.get(i).getTotalTimeInForeground();
-//              if (time1 > maxValue) maxValue = time1;
-//            }
+//            if (prayerList.get(i).getPackageName().equals("com.android.settings")) {
+//                time1 = prayerList.get(i).getTotalTimeInForeground();
+//                if (time1 > maxValue) maxValue = time1;
+
+            if(prayerList.get(i).getPackageName().equals("com.instagram.android"))
+            {
+              time0 = prayerList.get(i).getTotalTimeInForeground();
+              if (time0 > maxValue) maxValue = time0;
+            }
+            if(prayerList.get(i).getPackageName().equals("com.facebook.android"))
+            {
+              time1 = prayerList.get(i).getTotalTimeInForeground();
+              if (time1 > maxValue) maxValue = time1;
+            }
             if(prayerList.get(i).getPackageName().equals("com.twitter.android"))
             {
                 time2 = prayerList.get(i).getTotalTimeInForeground();
@@ -118,7 +118,7 @@ public class DisplayAppUsage extends Activity{
         barGraph.addSeries(series);
         barGraph.getViewport().setYAxisBoundsManual(true);
         barGraph.getViewport().setMinY(0);
-        barGraph.getViewport().setMaxY((maxValue/1000)+5);
+        barGraph.getViewport().setMaxY(20);
         barGraph.getViewport().setXAxisBoundsManual(true);
         barGraph.getViewport().setMinX(0);
         barGraph.getViewport().setMaxX(5);
